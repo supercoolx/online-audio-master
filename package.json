@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon",
+    "heroku-prebuild": "npm --prefix install",
     "build": "npm --prefix client run build"
   },
   "dependencies": {
