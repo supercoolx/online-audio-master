@@ -20,6 +20,9 @@ import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui"
 import "@solana/wallet-adapter-react-ui/styles.css"
 
+import { Provider } from "react-redux"
+import store from "redux/store"
+
 function App() {
 	const network = WalletAdapterNetwork.Mainnet
 	const endpoint = useMemo(() => clusterApiUrl(network), [network])
@@ -35,19 +38,21 @@ function App() {
 	], [network])
 
 	return (
-		<ConnectionProvider endpoint={endpoint}>
-			<WalletProvider wallets={wallets}>
-				<WalletModalProvider>
-					<BrowserRouter>
-						<Routes>
-							<Route path="/" element={<Home />} />
-							<Route path="/login" element={<Login />} />
-							<Route path="/signup" element={<Signup />} />
-						</Routes>
-					</BrowserRouter>
-				</WalletModalProvider>
-			</WalletProvider>
-		</ConnectionProvider>
+		<Provider store={store}>
+			<ConnectionProvider endpoint={endpoint}>
+				<WalletProvider wallets={wallets}>
+					<WalletModalProvider>
+						<BrowserRouter>
+							<Routes>
+								<Route path="/" element={<Home />} />
+								<Route path="/login" element={<Login />} />
+								<Route path="/signup" element={<Signup />} />
+							</Routes>
+						</BrowserRouter>
+					</WalletModalProvider>
+				</WalletProvider>
+			</ConnectionProvider>
+		</Provider>
 	)
 }
 
